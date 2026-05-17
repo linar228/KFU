@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,27 +32,32 @@ public class AlertController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('INCIDENT:WRITE')")
     public Alert create(@RequestBody Alert alert) {
         return alertService.create(alert);
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('INCIDENT:READ')")
     public List<Alert> getAll(@RequestParam(required = false) String status) {
         StatusType statusType = status == null ? null : StatusType.fromValue(status);
         return alertService.getAll(statusType);
     }
 
     @PutMapping("/{id}/assign")
+    @PreAuthorize("hasAuthority('INCIDENT:ASSIGN')")
     public Alert assign(@PathVariable Long id, @RequestBody AssignRequest request) {
         return alertService.assign(id, request.getUserId());
     }
 
     @PutMapping("/{id}/status_change")
+    @PreAuthorize("hasAuthority('INCIDENT:STATUS')")
     public Alert changeStatus(@PathVariable Long id, @RequestBody StatusChangeRequest request) {
         return alertService.changeStatus(id, StatusType.fromValue(request.getStatus()));
     }
 
     @PostMapping(value = "/{id}/photos", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAuthority('INCIDENT:PHOTO')")
     public Alert uploadPhoto(
             @PathVariable Long id,
             @RequestParam(required = false) MultipartFile file,

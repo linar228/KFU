@@ -15,6 +15,7 @@ import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
@@ -60,9 +61,9 @@ public class ReportService {
                 addRow(table, "Assigned to",
                         alert.getSensor().getAssignedTo() == null ? "Not assigned" : alert.getSensor().getAssignedTo().getUsername(),
                         labelFont, valueFont);
-                addRow(table, "Photos", alert.getPhotoUrls().isEmpty() ? "None" : String.join("\n", alert.getPhotoUrls()), labelFont, valueFont);
 
                 document.add(table);
+                addPhotos(document, alert, labelFont, valueFont);
                 document.close();
             }
 
@@ -82,6 +83,31 @@ public class ReportService {
 
         table.addCell(labelCell);
         table.addCell(valueCell);
+    }
+
+    private void addPhotos(Document document, Alert alert, Font labelFont, Font valueFont) throws DocumentException, IOException {
+        Paragraph photoTitle = new Paragraph("Photos", labelFont);
+        photoTitle.setSpacingBefore(18);
+        photoTitle.setSpacingAfter(10);
+        document.add(photoTitle);
+
+        if (alert.getPhotoUrls().isEmpty()) {
+            document.add(new Paragraph("None", valueFont));
+            return;
+        }
+
+        for (String photoUrl : alert.getPhotoUrls()) {
+            Path photoPath = Path.of(photoUrl);
+
+            if (Files.exists(photoPath)) {
+                Image image = Image.getInstance(photoPath.toAbsolutePath().toString());
+                image.scaleToFit(450, 300);
+                image.setSpacingAfter(12);
+                document.add(image);
+            } else {
+                document.add(new Paragraph(photoUrl, valueFont));
+            }
+        }
     }
 
     private Font createFont(int size, int style) {

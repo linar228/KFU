@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +22,13 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('USER:READ')")
     public List<User> getAll() {
         return userService.getAll();
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('USER:WRITE')")
     public User create(@RequestBody User user) {
         return userService.create(user);
     }

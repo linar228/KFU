@@ -1,3 +1,7 @@
+C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\config\DataInitializer.java
+C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\config\OpenApiSecurityConfig.java
+C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\config\SecurityConfig.java
+C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\config\UserDetailsServiceImpl.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\controller\AlertController.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\controller\AlertPageController.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\controller\ApiExceptionHandler.java
@@ -6,10 +10,14 @@ C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\controller\UserControll
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\DemoApplication.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\model\Alert.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\model\EventType.java
+C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\model\Permission.java
+C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\model\Role.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\model\Sensor.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\model\StatusType.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\model\User.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\repository\AlertRepository.java
+C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\repository\PermissionRepository.java
+C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\repository\RoleRepository.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\repository\SensorRepository.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\repository\UserRepository.java
 C:\Users\user\Desktop\KFU\src\main\java\com\example\demo\service\AlertService.java

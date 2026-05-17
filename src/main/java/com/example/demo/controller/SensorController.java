@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,21 +25,25 @@ public class SensorController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('SENSOR:READ')")
     public List<Sensor> getAll() {
         return sensorService.getAll();
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('SENSOR:WRITE')")
     public Sensor create(@RequestBody Sensor sensor) {
         return sensorService.create(sensor);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('SENSOR:WRITE')")
     public Sensor update(@PathVariable Long id, @RequestBody Sensor sensor) {
         return sensorService.update(id, sensor);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('SENSOR:DELETE')")
     public void delete(@PathVariable Long id) {
         sensorService.delete(id);
     }

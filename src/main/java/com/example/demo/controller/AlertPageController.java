@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -25,12 +26,14 @@ public class AlertPageController {
     }
 
     @GetMapping("/incidents/{id}/photos")
+    @PreAuthorize("hasAuthority('INCIDENT:PHOTO')")
     public String photoForm(@PathVariable Long id, Model model) {
         model.addAttribute("alert", alertService.getById(id));
         return "photo-upload";
     }
 
     @PostMapping("/incidents/{id}/photos")
+    @PreAuthorize("hasAuthority('INCIDENT:PHOTO')")
     public String uploadPhoto(
             @PathVariable Long id,
             @RequestParam MultipartFile file,

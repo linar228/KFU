@@ -1,15 +1,12 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,22 +17,27 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "app_users")
-public class User {
+@Table(
+        name = "app_permissions",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"resource", "operation"})
+)
+public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false)
+    private String resource;
 
     @Column(nullable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+    private String operation;
 
-    private boolean enabled = true;
+    public Permission(String resource, String operation) {
+        this.resource = resource;
+        this.operation = operation;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "app_role_id")
-    private Role role;
+    public String getAuthority() {
+        return resource.toUpperCase() + ":" + operation.toUpperCase();
+    }
 }
