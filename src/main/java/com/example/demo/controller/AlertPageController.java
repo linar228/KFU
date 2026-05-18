@@ -1,13 +1,8 @@
 package com.example.demo.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,22 +33,16 @@ public class AlertPageController {
             @PathVariable Long id,
             @RequestParam MultipartFile file,
             Model model
-    ) throws IOException {
+    ) {
         if (file.isEmpty()) {
             model.addAttribute("alert", alertService.getById(id));
-            model.addAttribute("error", "Выберите файл для загрузки");
+            model.addAttribute("error", "Choose a file to upload");
             return "photo-upload";
         }
 
-        Path directory = Path.of("uploads", "alerts", id.toString());
-        Files.createDirectories(directory);
-        String filename = StringUtils.cleanPath(String.valueOf(file.getOriginalFilename()));
-        Path target = directory.resolve(System.currentTimeMillis() + "-" + filename);
-        file.transferTo(target);
-
-        Alert alert = alertService.addPhoto(id, target.toString());
+        Alert alert = alertService.addPhotoFile(id, file);
         model.addAttribute("alert", alert);
-        model.addAttribute("message", "Фото загружено");
+        model.addAttribute("message", "Photo uploaded");
         return "photo-upload";
     }
 }

@@ -3,6 +3,11 @@ spring:
     name: app
   profiles:
     active: dev
+
+app:
+  storage:
+    uploads-path: uploads
+    reports-path: reports
   
 ---
 spring:

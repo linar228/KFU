@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.properties.StorageProperties;
 import com.example.demo.model.Alert;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -27,10 +28,15 @@ import com.lowagie.text.pdf.PdfWriter;
 @Service
 public class ReportService {
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final StorageProperties storageProperties;
+
+    public ReportService(StorageProperties storageProperties) {
+        this.storageProperties = storageProperties;
+    }
 
     public String generateResolvedAlertReport(Alert alert) {
         try {
-            Path directory = Path.of("reports", "alerts");
+            Path directory = Path.of(storageProperties.getReportsPath(), "alerts");
             Files.createDirectories(directory);
             Path reportPath = directory.resolve("alert-" + alert.getId() + "-resolved.pdf");
 

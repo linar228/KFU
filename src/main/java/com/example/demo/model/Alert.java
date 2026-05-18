@@ -18,6 +18,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.example.demo.enums.EventType;
+import com.example.demo.enums.StatusType;
+
 @Getter
 @Setter
 @NoArgsConstructor

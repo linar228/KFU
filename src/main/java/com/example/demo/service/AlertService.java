@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.enums.StatusType;
 import com.example.demo.model.Alert;
 import com.example.demo.model.Sensor;
-import com.example.demo.model.StatusType;
 import com.example.demo.model.User;
 import com.example.demo.repository.AlertRepository;
 import com.example.demo.repository.SensorRepository;
@@ -19,17 +20,20 @@ public class AlertService {
     private final SensorRepository sensorRepository;
     private final UserRepository userRepository;
     private final ReportService reportService;
+    private final FileStorageService fileStorageService;
 
     public AlertService(
             AlertRepository alertRepository,
             SensorRepository sensorRepository,
             UserRepository userRepository,
-            ReportService reportService
+            ReportService reportService,
+            FileStorageService fileStorageService
     ) {
         this.alertRepository = alertRepository;
         this.sensorRepository = sensorRepository;
         this.userRepository = userRepository;
         this.reportService = reportService;
+        this.fileStorageService = fileStorageService;
     }
 
     public Alert create(Alert alert) {
@@ -76,6 +80,14 @@ public class AlertService {
         Alert alert = getById(alertId);
         alert.getPhotoUrls().add(photoUrl);
         return alert;
+    }
+
+    @Transactional
+    public Alert addPhotoFile(Long alertId, MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException("Photo file is required");
+        }
+        return addPhoto(alertId, fileStorageService.saveAlertPhoto(alertId, file));
     }
 
     public Alert getById(Long id) {
