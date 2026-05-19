@@ -13,3 +13,7 @@ app:
   storage:
     uploads-path: target/test-uploads
     reports-path: target/test-reports
+  jwt:
+    secret: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    expiration-minutes: 120
+    cookie-name: JWT_TOKEN

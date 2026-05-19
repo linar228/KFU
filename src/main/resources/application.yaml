@@ -8,6 +8,10 @@ app:
   storage:
     uploads-path: uploads
     reports-path: reports
+  jwt:
+    secret: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    expiration-minutes: 120
+    cookie-name: JWT_TOKEN
   
 ---
 spring:
